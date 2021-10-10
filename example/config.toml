@@ -1,0 +1,33 @@
+# Example: Rusty Site configuration
+
+title = "Rusty Site"
+author = "Lone Adventurer"
+
+# target_dir: placeholder for the generated files
+# `target_dir`/preview : generated folder for internal view (`watch` command)
+# `target_dir`/deploy : generated folder for deploy
+# `target_dir`/storage : Optional directory for storing files (images, archives)
+#                        if fileserver.is_separate_fileserver is true
+target_dir = "_site"
+
+[fileserver]
+# is_separate_fileserver: If true, the images, archives are stored into a
+# separate directory.
+#
+# static files are stored into the generated html directory together.
+is_separate_fileserver = true
+
+# fileserver_domain: defines the link to the fileserver domain.
+# All images, archives links have this domain prefix.
+# For example, `path/a/image.png`
+#              --> `https://storage.rusty.eunchan.kim/path/a/image.png`
+fileserver_domain = "https://storage.rusty.eunchan.kim"
+
+# fileserver_type: ["gcs", "github", "s3"]
+# If github, fileserver_token is the github userID (assumed credential is already there)
+# If gcs, no other info is used. Assumed the gsutil already configured to upload to the bucket
+# (TBD) If s3,
+fileserver_type = "gcs"
+
+[watch]
+port = 8000
