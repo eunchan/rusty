@@ -1,3 +1,5 @@
+use tera::Tera;
+
 // rusty Main function
 mod meta;
 mod page;
