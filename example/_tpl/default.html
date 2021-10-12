@@ -1,11 +1,21 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>{{ title }}</title>
-  <link rel="stylesheet" media="screen" type="text/css" href="/_static/css/site.css">
-</head>
-<body>
-{{ body }}
-</body>
-</html>
+{% extend base.html %}
+
+{% block title %}
+Default Title
+{% endblock title %}
+
+{% block doc_title %}
+Lorem Ipsum
+{% endblock doc_title %}
+
+{% block content  %}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas non nisi viverra, aliquam ligula quis, laoreet eros. Donec tristique imperdiet mauris, quis dictum dolor tempor eget. Ut molestie massa ut dolor convallis finibus. Nulla posuere orci est, non scelerisque dolor congue quis. Mauris vitae pharetra sapien. Maecenas arcu neque, maximus eu augue in, semper malesuada lacus. Vestibulum tempor ipsum quis sem ullamcorper, ut lacinia mi accumsan.
+
+Morbi et dui a sem varius sodales ac vulputate nisi. Curabitur vehicula magna sed quam semper sagittis. Curabitur faucibus molestie nisl, eget vulputate arcu consectetur vel. Ut sagittis ipsum tellus, sit amet mattis diam dignissim a. Nullam pulvinar eros tortor, sed placerat metus maximus vitae. Aenean purus ex, vulputate ut mi eget, laoreet aliquam lorem. Pellentesque dapibus lectus felis, gravida finibus metus egestas nec. Praesent hendrerit lectus non felis hendrerit, id venenatis nisi volutpat. Nam auctor pretium velit ac ullamcorper. Maecenas mattis a tellus at lobortis.
+
+Aliquam at mauris est. Etiam egestas nisi sed dui accumsan convallis. Vivamus maximus ultricies nibh ac mattis. Vestibulum vel tellus vitae augue dapibus sagittis non venenatis tellus. Fusce eleifend iaculis diam non elementum. In finibus nulla non mi mattis, quis facilisis augue blandit. Etiam odio urna, consectetur quis orci eu, lacinia vehicula lectus. Donec et enim dui. Ut neque turpis, imperdiet vel felis vel, dapibus scelerisque tellus. Mauris eu pulvinar urna. Nullam malesuada eget dui pretium pretium.
+
+Vivamus a elementum nisl, quis rutrum arcu. Suspendisse potenti. Aliquam non nibh sed velit fringilla pellentesque. Mauris consequat mauris dui, ut convallis sem fermentum sed. Nullam dapibus faucibus sagittis. Phasellus velit nisl, consequat et eleifend ultrices, imperdiet ut justo. Duis odio sapien, efficitur ac volutpat sit amet, porta a tellus. Proin finibus turpis in magna faucibus, sed pulvinar metus tincidunt. Nulla eu ultrices ligula. Praesent eleifend porta ante, ut posuere nulla congue sit amet. Sed arcu diam, varius tristique neque tempus, facilisis sollicitudin purus. Proin quis tortor sed magna pretium facilisis a at augue. Fusce commodo nisl at scelerisque efficitur. Vestibulum in arcu eu massa bibendum blandit. Sed posuere imperdiet varius. Vestibulum sit amet dolor sit amet nulla semper auctor at ut urna.
+
+Curabitur placerat scelerisque odio nec viverra. Proin vehicula ex vitae nibh mattis, eget tristique metus congue. Donec sit amet posuere sapien. Aenean cursus sapien id suscipit malesuada. Proin non lectus eu tortor pellentesque porttitor. Sed sit amet enim feugiat, varius nunc sed, facilisis dui. Donec pulvinar facilisis rhoncus. Mauris et congue tellus, nec consectetur urna. Pellentesque in nisi mi. Etiam a ultrices felis. Curabitur rutrum libero in ornare tempus. In sed sapien et risus fermentum fringilla. Integer eu risus sagittis, iaculis ipsum id, condimentum dolor. Vestibulum dapibus diam justo, ut volutpat dolor finibus nec.
+{% endblock content %}
