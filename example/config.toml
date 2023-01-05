@@ -1,7 +1,7 @@
 # Example: Rusty Site configuration
 
 title = "Rusty Site"
-author = "Lone Adventurer"
+author = "Wanderer"
 
 # target_dir: placeholder for the generated files
 # `target_dir`/preview : generated folder for internal view (`watch` command)
