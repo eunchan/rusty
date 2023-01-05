@@ -10,7 +10,7 @@ pub struct Template {
 }
 
 impl Template {
-    pub fn load_template(path: &str) -> Template {
+    pub fn load_template(path: &str) -> Self {
         // use globbing
         let mut tera = match Tera::new(path) {
             Ok(a) => a,
