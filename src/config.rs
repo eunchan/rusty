@@ -42,8 +42,8 @@ pub enum FileServerType {
 
 impl Config {
     // Read .toml file and return config struct
-    pub fn read_file(path: &str) -> Self {
-        let content = match fs::read_to_string(path) {
+    pub fn read_file(path: &String) -> Self {
+    let content = match fs::read_to_string(path.as_str()) {
             Ok(c) => c,
             Err(_) => {
                 eprintln!("Could not read file `{}`", path);
