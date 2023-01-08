@@ -1,14 +1,18 @@
 use tera::Tera;
 
 // rusty Main function
+mod config;
 mod meta;
 mod page;
 mod template;
 
+use config::Config;
 use template::Template;
 
 pub fn main() {
-  println!("Rusty");
-  let tpl = Template::load_template("_tpl/**/*.html");
-  println!("{:?}", tpl.templates);
+  // TODO: Parse arg
+  
+  // Load config
+  let cfg = Config::read_file("config.toml");
+  println!("{:?}", cfg);
 }
