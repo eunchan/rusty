@@ -6,6 +6,7 @@ use std::path::{Path, PathBuf};
 use tera::Tera;
 
 // rusty Main function
+mod build;
 mod config;
 mod meta;
 mod page;
@@ -13,6 +14,7 @@ mod template;
 
 use config::Config;
 use template::Template;
+use build::build;
 
 #[derive(Parser, Debug)]
 #[command(name = "Rusty")]
@@ -31,12 +33,16 @@ struct Cli {
 #[derive(Subcommand, Debug)]
 enum Commands {
   // Build Website
-  Build,
+  Build {
+    // build pages with Draft
+    #[arg(short, long, default_value = "true")]
+    draft: bool,
+  },
   Deploy,
   Watch {
     // Preview or release
-    #[arg(short, long)]
-    preview: bool,
+    #[arg(short, long, default_value = "true")]
+    draft: bool,
   },
 }
 
@@ -58,4 +64,14 @@ fn main() {
   println!("{:?}", cfg);
 
   // Subcommands
+  match arg.command {
+    Some(Commands::Build { draft }) => {
+      build(&cfg, draft);
+    }
+    // Some(Commands::Deploy)
+    // Some(Commands::Watch { draft })
+    _ => {
+      println!("Not implemented");
+    }
+  }
 }
