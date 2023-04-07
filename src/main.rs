@@ -6,6 +6,7 @@ use std::path::{Path, PathBuf};
 use tera::Tera;
 
 // rusty Main function
+mod asset;
 mod build;
 mod config;
 mod meta;
