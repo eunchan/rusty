@@ -54,3 +54,11 @@ with `src='/_static/css/website.css'`.
 You can put any markdown files into `posts/` directory. The hierarchy inside
 `posts/` directory is ignored. `rusty` uses [Metadata](metadata.md) and reorders
 the posts in canonical order. Details are explained in [Blog](blog.md).
+
+## `pages/`
+
+`pages/` contains markdown documents, images, and files. All the assets (md,
+img, file) under `pages/` moves up one ladder when being processed. For
+instance, the tool processes `pages/article/how-to-design-ssg.md` document and
+generates `/article/how-to-design-ssg.html` OR
+`/article/how-to-design-ssg/index.html` (May not be supported).
