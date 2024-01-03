@@ -3,9 +3,10 @@
 // Page is consisted of Meta and Text
 #[warn(unused_imports)]
 use regex::Regex;
-use std::fs::File;
+use std::fs;
 use std::path::{Path, PathBuf};
 use std::io::{self, BufRead, BufReader, Lines};
+use chrono::{Local, DateTime, NaiveDate};
 
 use crate::meta::Meta;
 
@@ -20,7 +21,7 @@ impl Page {
     //= static functions ============================================
     pub fn new(path: String) -> Self {
         let mut page = Page {
-            meta: Meta::new(),
+            meta: Meta::new(&path),
             md: Some(PathBuf::from(path)),
             uri: PathBuf::new(),
             text: String::from(""),
@@ -35,10 +36,14 @@ impl Page {
     pub fn create(uri: PathBuf) -> Self {
         // Create target. In this case no markdown file is given.
         Page {
-            meta: Meta::new(),
+            meta: Meta::new(
+                &(uri.clone()
+                     .into_os_string()
+                     .into_string()
+                     .unwrap())),
             md: None,
             uri: uri,
-        text: String::from(""),
+            text: String::from(""),
         }
     }
 
@@ -84,6 +89,10 @@ impl Page {
 
             println!("{:?}", meta_lines);
 
+            self.meta.from_vec(meta_lines);
+
+            // Extract rest of the lines for Markdown body
+
             // Merge rest of the lines
             //for line in lines {
             //    if let Ok(ip) = line {
@@ -98,8 +107,8 @@ impl Page {
     }
 }
 
-fn read_lines(filename: &str) -> io::Result<Lines<BufReader<File>>> {
-    let file = File::open(filename)?;
+fn read_lines(filename: &str) -> io::Result<Lines<BufReader<fs::File>>> {
+    let file = fs::File::open(filename)?;
     Ok(BufReader::new(file).lines())
 }
 
@@ -113,5 +122,14 @@ mod tests {
         let mdpath = PathBuf::from("tests/page.md");
         assert_eq!(item.md.unwrap(), mdpath);
 
+        // Metadata compare
+        assert_eq!(item.meta.title, "Test Page".to_string());
+        assert_eq!(item.meta.public, true);
+        assert_eq!(item.meta.slug, "test-page".to_string());
+        // DateTime
+        assert_eq!(item.meta.date, Some(
+            DateTime::parse_from_str("2022-12-31 00:00:00 -0800", "%Y-%m-%d %H:%M:%S %z")
+                .unwrap()
+                .with_timezone(&Local)));
     }
 }

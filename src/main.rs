@@ -9,6 +9,7 @@ use tera::Tera;
 mod asset;
 mod build;
 mod config;
+mod item;
 mod meta;
 mod page;
 mod template;

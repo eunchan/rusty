@@ -3,7 +3,7 @@
 
 use walkdir::WalkDir;
 
-use super::config::Config;
+use crate::config::Config;
 
 pub fn build(cfg: &Config, draft: bool) {
     println!("build");
@@ -38,4 +38,7 @@ pub fn build(cfg: &Config, draft: bool) {
     }
     
     println!("Markdown docs: {}", doc.len());
+    println!("Images: {}", img.len());
+    println!("Assets: {}", file.len());
+
 }
