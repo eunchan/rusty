@@ -57,7 +57,7 @@ impl Meta {
 
     pub fn from_vec(&mut self, v: Vec<String>) {
         let meta_str = v.join("\n");
-        println!("{}", meta_str);
+
         self.metadata = serde_yaml::from_str(&meta_str).unwrap();
         self.title = self.metadata.title.clone();
         self.public = self.metadata.public.unwrap_or(false);

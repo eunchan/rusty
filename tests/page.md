@@ -10,3 +10,10 @@ slug: 'test-page'
 This is a test page.
 
 It has a [link](https://testpage) to external. It also has an [[internal_link]].
+The asset is given in:
+
+![](image.jpg)
+
+### Subsection
+
+The subsection is heading 3.

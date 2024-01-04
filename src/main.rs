@@ -12,6 +12,7 @@ mod config;
 mod item;
 mod meta;
 mod page;
+mod compile;
 mod template;
 
 use config::Config;

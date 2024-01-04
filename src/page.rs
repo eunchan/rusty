@@ -14,7 +14,8 @@ pub struct Page {
     pub meta: Meta,
     pub md: Option<PathBuf>,  // TODO: Markdown
     pub uri: PathBuf,
-    pub text: String
+    pub text: String,
+    pub html: String,
 }
 
 impl Page {
@@ -25,6 +26,7 @@ impl Page {
             md: Some(PathBuf::from(path)),
             uri: PathBuf::new(),
             text: String::from(""),
+            html: String::from(""),
         };
 
         page.load_content();
@@ -44,6 +46,7 @@ impl Page {
             md: None,
             uri: uri,
             text: String::from(""),
+            html: String::from(""),
         }
     }
 
@@ -87,11 +90,17 @@ impl Page {
                 }
             }
 
-            println!("{:?}", meta_lines);
+            // println!("{:?}", meta_lines);
 
             self.meta.from_vec(meta_lines);
 
             // Extract rest of the lines for Markdown body
+            let mut body_lines: Vec<String> = Vec::new();
+            for line in lines.filter_map(|result| result.ok()) {
+                body_lines.push(line);
+            }
+            self.text = body_lines.join("\n");
+            //println!("{}", self.text);
 
             // Merge rest of the lines
             //for line in lines {
