@@ -3,8 +3,6 @@
 use clap::{Parser, Subcommand};
 use std::path::{Path, PathBuf};
 
-use tera::Tera;
-
 // rusty Main function
 mod asset;
 mod build;
