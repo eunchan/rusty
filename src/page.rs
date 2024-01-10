@@ -6,6 +6,7 @@ use regex::Regex;
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::io::{self, BufRead, BufReader, Lines};
+use tera::Context;
 use chrono::{Local, DateTime, NaiveDate};
 
 use crate::meta::Meta;
@@ -114,6 +115,18 @@ impl Page {
 
         Ok(())
     }
+
+    pub fn get_context(&self) -> Context {
+        let mut ctx = Context::new();
+        ctx.insert("title", &self.meta.title);
+        ctx.insert("public", &self.meta.public);
+        ctx.insert("slug", &self.meta.slug);
+        ctx.insert("date", &self.meta.date.unwrap()
+                                          .format("%b %-d, %-I:%M")
+                                          .to_string());
+
+        ctx
+    }
 }
 
 fn read_lines(filename: &str) -> io::Result<Lines<BufReader<fs::File>>> {
@@ -140,5 +153,13 @@ mod tests {
             DateTime::parse_from_str("2022-12-31 00:00:00 -0800", "%Y-%m-%d %H:%M:%S %z")
                 .unwrap()
                 .with_timezone(&Local)));
+    }
+
+    #[test]
+    fn page_context() {
+        let item = Page::new(String::from("tests/page.md"));
+
+        let ctx = item.get_context();
+
     }
 }

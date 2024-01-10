@@ -9,6 +9,7 @@
 // - Call comrak to convert markdown to html
 use crate::config::Config;
 use crate::page::Page;
+use crate::template::Template;
 use crate::asset::Asset;
 
 use comrak::{Arena, parse_document, format_html, Options};
@@ -47,5 +48,16 @@ mod tests {
             <h3>Subsection</h3>\n\
             <p>The subsection is heading 3.</p>\n"
         );
+    }
+
+    #[test]
+    fn template_with_page() {
+        let mut item = Page::new(String::from("tests/page.md"));
+        let mut tpl = Template::load_template("tests/_tpl/*.html");
+
+        compile_page(&mut item);
+        let rendered = tpl.render("default.html", &item);
+
+        println!("{}", rendered);
     }
 }

@@ -13,13 +13,16 @@ pub struct Template {
 impl Template {
     pub fn load_template(path: &str) -> Self {
         // use globbing
-        let tera = match Tera::new(path) {
+        let mut tera = match Tera::new(path) {
             Ok(a) => a,
             Err(e) => {
                 println!("Parsing error(s): {}", e);
                 ::std::process::exit(1);
             }
         };
+
+        // turn off autoescape
+        tera.autoescape_on(vec![]);
 
         // tera.register_filter("test", test_filter);
 
@@ -38,8 +41,12 @@ impl Template {
     // Assumptions:
     // - page.text is already converted into html from markdown
     // - page.text relative URLs are replaced to the direct path
-    pub fn render(&self, page: &Page) -> bool {
-        false
+    pub fn render(&self, tpl: &str, page: &Page) -> String {
+        // Convert Metadata into Context
+        let mut ctx: Context = page.get_context();
+        ctx.insert("body", &page.html);
+        // Add html into body
+        self.templates.render(tpl, &ctx).unwrap()
     }
 }
 
