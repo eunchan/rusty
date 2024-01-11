@@ -1,8 +1,10 @@
 // Assets
 use std::collections::hash_map::DefaultHasher;
+use std::fmt;
 use std::hash::{Hash, Hasher};
 use std::path::PathBuf;
 
+#[derive(Debug)]
 pub struct Asset {
     pub path: PathBuf, // file
     pub uri: PathBuf,  // URI (without fileserver cfg)
@@ -14,10 +16,26 @@ impl Hash for Asset {
     }
 }
 
+impl fmt::Display for Asset {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Asset:\n  path: {}\n  uri: {}",
+            self.path.to_string_lossy(), self.uri.to_string_lossy())
+    }
+}
+
 fn calculate_hash<T: Hash>(t: &T) -> u64 {
     let mut s = DefaultHasher::new();
     t.hash(&mut s);
     s.finish()
+}
+
+impl Asset {
+    pub fn new(path: PathBuf) -> Self {
+        Asset {
+            path: path,
+            uri: PathBuf::from(""),
+        }
+    }
 }
 
 #[cfg(test)]

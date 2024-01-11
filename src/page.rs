@@ -3,6 +3,7 @@
 // Page is consisted of Meta and Text
 #[warn(unused_imports)]
 use regex::Regex;
+use std::fmt;
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::io::{self, BufRead, BufReader, Lines};
@@ -17,6 +18,16 @@ pub struct Page {
     pub uri: PathBuf,
     pub text: String,
     pub html: String,
+}
+
+impl fmt::Display for Page {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let md_path: String = match &self.md {
+            Some(f) => String::from(f.to_string_lossy()),
+            None => String::from("")
+        };
+        write!(f, "Page({md_path})")
+    }
 }
 
 impl Page {
