@@ -7,7 +7,6 @@ use crate::page::Page;
 
 pub struct Template {
     pub templates: Tera,
-    pub context: Context,
 }
 
 impl Template {
@@ -28,7 +27,6 @@ impl Template {
 
         Template {
             templates: tera,
-            context: Context::new(),
         }
     }
 
@@ -57,8 +55,11 @@ mod tests {
     #[test]
     fn template_new() {
         let mut tpl = Template::load_template("tests/_tpl/*.html");
-        tpl.context.insert("title", "Test");
-        let rendered = tpl.templates.render("default.html", &tpl.context).unwrap();
+        let mut ctx = Context::new();
+        ctx.insert("title", "Test");
+        ctx.insert("body", "Test Body");
+        let rendered = tpl.templates.render("default.html", &ctx)
+                                    .unwrap();
         println!("{}", rendered);
     }
 }
