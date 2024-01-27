@@ -1,5 +1,4 @@
-#[warn(unused_imports)]
-
+#![allow(unused_imports)]
 use clap::{Parser, Subcommand};
 use std::path::{Path, PathBuf};
 
@@ -52,7 +51,7 @@ fn main() {
   let arg = Cli::parse();
 
   // Config
-  let mut cfg_path: &Path;
+  let cfg_path: &Path;
 
   if let Some(config) = arg.config.as_deref() {
     cfg_path = config;

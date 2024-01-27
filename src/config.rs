@@ -8,6 +8,7 @@ use std::process::exit;
 use toml;
 
 #[derive(Deserialize, Debug)]
+#[allow(dead_code)]
 pub struct Config {
     title: String,
     author: String,
@@ -18,6 +19,7 @@ pub struct Config {
 
 // Fileserver config if used
 #[derive(Deserialize, Debug)]
+#[allow(dead_code)]
 struct FileServer {
     is_fileserver: bool,
     domain: String,
@@ -25,6 +27,7 @@ struct FileServer {
 }
 
 #[derive(Deserialize, Debug)]
+#[allow(dead_code)]
 struct Watch {
     domain: String,
     port: u16,

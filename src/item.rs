@@ -30,7 +30,7 @@ pub fn scan_items(dir: String) -> (Vec<Page>, Vec<Asset>) {
                 let mut p = Page::new(
                     String::from(entry.path().to_string_lossy()
                 ));
-                p.load_content();
+                let _ = p.load_content();
                 pages.push(p);
             },
             "jpg" | "png" | "svg" => assets.push(

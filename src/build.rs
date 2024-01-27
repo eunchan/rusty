@@ -4,6 +4,7 @@
 use crate::config::Config;
 use crate::item::scan_items;
 
+#[allow(unused)] // for cfg
 pub fn build(cfg: &Config, draft: bool) {
     println!("build");
 

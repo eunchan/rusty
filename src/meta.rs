@@ -10,6 +10,7 @@ use serde_yaml;
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "lowercase")]
+#[allow(unused)]
 pub struct Metadata {
     title: String,
     date: Option<String>, // Need to convert to DateTime<Timezone>
@@ -100,11 +101,11 @@ fn _guess_date(id: &String) -> String {
 fn _convert_to_slug(title: &String) -> String {
     // TODO: Find if any lib does this
     // to lowercase
-    let mut result = title.clone();
-    result.replace(' ', "-");
-    result.replace('\'', "");
-    result.replace('"', "");
-    result.to_ascii_lowercase();
+    let result = title.clone()
+                      .replace(' ', "-")
+                      .replace('\'', "")
+                      .replace('"', "")
+                      .to_ascii_lowercase();
 
     result
 }

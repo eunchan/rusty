@@ -7,6 +7,7 @@
 //   - if media, possibly with domain (based on cfg or mode)
 // - Add relative markdown link list (intra w/ slugs)
 // - Call comrak to convert markdown to html
+#![allow(unused_imports)]
 use crate::config::Config;
 use crate::page::Page;
 use crate::template::Template;
@@ -20,6 +21,7 @@ pub fn compile_page(p: &mut Page) {
     let arena = Arena::new();
     let root = parse_document(&arena, &p.text, &Options::default());
 
+    #[allow(unused)]
     for node in root.children() {
         // Node manipulation
     }
@@ -53,11 +55,11 @@ mod tests {
     #[test]
     fn template_with_page() {
         let mut item = Page::new(String::from("tests/page.md"));
-        let mut tpl = Template::load_template("tests/_tpl/*.html");
+        let tpl = Template::load_template("tests/_tpl/*.html");
 
         compile_page(&mut item);
-        let rendered = tpl.render("default.html", &item);
+        tpl.render("default.html", &mut item);
 
-        println!("{}", rendered);
+        println!("{}", item.html);
     }
 }

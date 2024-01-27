@@ -39,12 +39,15 @@ impl Template {
     // Assumptions:
     // - page.text is already converted into html from markdown
     // - page.text relative URLs are replaced to the direct path
-    pub fn render(&self, tpl: &str, page: &Page) -> String {
+    pub fn render(&self, tpl: &str, page: &mut Page) {
         // Convert Metadata into Context
         let mut ctx: Context = page.get_context();
         ctx.insert("body", &page.html);
         // Add html into body
-        self.templates.render(tpl, &ctx).unwrap()
+        let rendered = self.templates.render(tpl, &ctx).unwrap();
+
+        // Store back to page
+        page.html = rendered.clone();
     }
 }
 
@@ -54,7 +57,7 @@ mod tests {
 
     #[test]
     fn template_new() {
-        let mut tpl = Template::load_template("tests/_tpl/*.html");
+        let tpl = Template::load_template("tests/_tpl/*.html");
         let mut ctx = Context::new();
         ctx.insert("title", "Test");
         ctx.insert("body", "Test Body");

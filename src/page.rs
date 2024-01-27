@@ -1,7 +1,7 @@
 // Page struct
 //
 // Page is consisted of Meta and Text
-#[warn(unused_imports)]
+#![allow(unused_imports)]
 use regex::Regex;
 use std::fmt;
 use std::fs;
@@ -41,12 +41,13 @@ impl Page {
             html: String::from(""),
         };
 
-        page.load_content();
+        let _ = page.load_content();
 
         page
     }
 
     // TODO: Add Meta (or fields of meta)
+    #[allow(dead_code)]
     pub fn create(uri: PathBuf) -> Self {
         // Create target. In this case no markdown file is given.
         Page {
@@ -74,28 +75,22 @@ impl Page {
         if let Ok(mut lines) = read_lines(&md_file.to_string_lossy()) {
             // Search Meta field
             // If the first line begins with `---.*` then Meta begins
-            let mut in_meta = false;
 
-            let first_line = match lines.next().unwrap() {
+            let _ = match lines.next().unwrap() {
                 Ok(l) => l,
-                Err(e) => String::from(""),
+                Err(_) => String::from(""),
             };
             
             let meta_regex = Regex::new(r"^\-\-\-+$").unwrap();
-
-            if meta_regex.is_match(first_line.as_str()) {
-                in_meta = true;
-            }
 
             let mut meta_lines: Vec<String> = Vec::new();
 
             loop {
                 let line = match lines.next().unwrap() {
                     Ok(l) => l,
-                    Err(e) => break,
+                    Err(_) => break,
                 };
                 if meta_regex.is_match(line.as_str()) {
-                    in_meta = false;
                     break;
                 } else {
                     meta_lines.push(line);
@@ -170,7 +165,7 @@ mod tests {
     fn page_context() {
         let item = Page::new(String::from("tests/page.md"));
 
-        let ctx = item.get_context();
+        let _ = item.get_context();
 
     }
 }
