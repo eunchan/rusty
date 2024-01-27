@@ -8,6 +8,7 @@ use std::path::PathBuf;
 pub struct Asset {
     pub path: PathBuf, // file
     pub uri: PathBuf,  // URI (without fileserver cfg)
+    pub hash: u64,     // Hash output
 }
 
 impl Hash for Asset {
@@ -23,17 +24,14 @@ impl fmt::Display for Asset {
     }
 }
 
-fn calculate_hash<T: Hash>(t: &T) -> u64 {
-    let mut s = DefaultHasher::new();
-    t.hash(&mut s);
-    s.finish()
-}
-
 impl Asset {
     pub fn new(path: PathBuf) -> Self {
+        let mut s = DefaultHasher::new();
+        path.hash(&mut s);
         Asset {
             path: path,
             uri: PathBuf::from(""),
+            hash: s.finish(),
         }
     }
 }
@@ -44,20 +42,13 @@ mod tests {
 
     #[test]
     fn hash() {
-        let asset1 = Asset {
-            path: PathBuf::from("tests/img1.jpg"),
-            uri: PathBuf::from(""),
-        };
-        let asset2 = Asset {
-            path: PathBuf::from("tests/img1.jpg"),
-            uri: PathBuf::from("/media/img1.jpg"),
-        };
-        let asset3 = Asset {
-            path: PathBuf::from("tests/img2.jpg"),
-            uri: PathBuf::from("/media/img2.jpg"),
-        };
+        let asset1 = Asset::new(PathBuf::from("tests/img1.jpg"));
+        let mut asset2 = Asset::new(PathBuf::from("tests/img1.jpg"));
+        asset2.uri = PathBuf::from("/media/img1.jpg");
+        let mut asset3 = Asset::new(PathBuf::from("tests/img2.jpg"));
+        asset3.uri = PathBuf::from("/media/img2.jpg");
 
-        assert_eq!(calculate_hash(&asset1), calculate_hash(&asset2));
-        assert_ne!(calculate_hash(&asset2), calculate_hash(&asset3));
+        assert_eq!(asset1.hash, asset2.hash);
+        assert_ne!(asset2.hash, asset3.hash);
     }
 }
