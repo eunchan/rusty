@@ -14,7 +14,7 @@ use crate::meta::Meta;
 
 pub struct Page {
     pub meta: Meta,
-    pub md: Option<PathBuf>,  // TODO: Markdown
+    pub path: Option<PathBuf>,  // TODO: Markdown
     pub uri: PathBuf,
     pub text: String,
     pub html: String,
@@ -22,7 +22,7 @@ pub struct Page {
 
 impl fmt::Display for Page {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let md_path: String = match &self.md {
+        let md_path: String = match &self.path {
             Some(f) => String::from(f.to_string_lossy()),
             None => String::from("")
         };
@@ -35,7 +35,7 @@ impl Page {
     pub fn new(path: String) -> Self {
         let mut page = Page {
             meta: Meta::new(&path),
-            md: Some(PathBuf::from(path)),
+            path: Some(PathBuf::from(path)),
             uri: PathBuf::new(),
             text: String::from(""),
             html: String::from(""),
@@ -56,7 +56,7 @@ impl Page {
                      .into_os_string()
                      .into_string()
                      .unwrap())),
-            md: None,
+            path: None,
             uri: uri,
             text: String::from(""),
             html: String::from(""),
@@ -67,7 +67,7 @@ impl Page {
     // load content from file (.md) and store into md
     pub fn load_content(&mut self) -> Result<(), &str> {
 
-        let md_file = match &self.md {
+        let md_file = match &self.path {
             Some(f) => f,
             None => return Err("Markdown file is not configured"),
         };
@@ -148,7 +148,7 @@ mod tests {
     fn page_new() {
         let item = Page::new(String::from("tests/page.md"));
         let mdpath = PathBuf::from("tests/page.md");
-        assert_eq!(item.md.unwrap(), mdpath);
+        assert_eq!(item.path.unwrap(), mdpath);
 
         // Metadata compare
         assert_eq!(item.meta.title, "Test Page".to_string());

@@ -15,11 +15,18 @@ use crate::asset::Asset;
 
 use comrak::{Arena, parse_document, format_html, Options};
 use comrak::nodes::{AstNode, NodeValue};
+use std::path::{Path, PathBuf};
 
-// TODO: Add context, config, other manipulators
-pub fn compile_page(p: &mut Page) {
+// TODO: Add context, config, other manipulators.
+//
+// Assumption: the destination URI has been manipulated, or it is given to this
+// function.
+pub fn compile_page(p: &mut Page, transform: &dyn Fn(&PathBuf) -> PathBuf) {
     let arena = Arena::new();
     let root = parse_document(&arena, &p.text, &Options::default());
+
+    // Path manipulation
+    p.uri = transform(&(p.path.clone().unwrap()));
 
     #[allow(unused)]
     for node in root.children() {
@@ -31,6 +38,23 @@ pub fn compile_page(p: &mut Page) {
     p.html = String::from_utf8(html).unwrap();
 }
 
+// Libraries for Path manipulation
+
+fn transform_none(path: &PathBuf) -> PathBuf {
+    path.clone()
+}
+
+// Remove top N directory to the destination uri.
+// Args:
+//   depth: the number of directory depth to remove.
+//
+// Returns:
+//   Transformed the path.
+#[allow(unused)]
+fn transform_moveup(depth: i32, path: &PathBuf) -> PathBuf {
+    path.clone()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -39,7 +63,7 @@ mod tests {
     fn page_compile() {
         let mut item = Page::new(String::from("tests/page.md"));
 
-        compile_page(&mut item);
+        compile_page(&mut item, &transform_none);
         assert_eq!(
            item.html,
             "<h2>Section</h2>\n\
@@ -57,7 +81,7 @@ mod tests {
         let mut item = Page::new(String::from("tests/page.md"));
         let tpl = Template::load_template("tests/_tpl/*.html");
 
-        compile_page(&mut item);
+        compile_page(&mut item, &transform_none);
         tpl.render("default.html", &mut item);
 
         println!("{}", item.html);

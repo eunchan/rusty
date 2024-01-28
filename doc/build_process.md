@@ -14,6 +14,7 @@ walking the directories, `rusty` builds a database that contains:
         - filename without `YYYY-MM-DD-` format
         - If `slug` is in `.md` metadata, use the `slug`
         - `index.md` will have its directory as its `slug` by default
+            - What if the directory name collides?
         - if `noslug` is true in the `.md` metadata, skip
     - img
         - filename as `slug` with `img:` prefix.
