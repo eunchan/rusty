@@ -3,7 +3,7 @@
 
 use tera::{Tera, Context};
 
-use crate::page::Page;
+use page::Page;
 
 pub struct Template {
     pub templates: Tera,

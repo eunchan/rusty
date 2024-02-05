@@ -8,10 +8,10 @@
 // - Add relative markdown link list (intra w/ slugs)
 // - Call comrak to convert markdown to html
 #![allow(unused_imports)]
-use crate::config::Config;
-use crate::page::Page;
-use crate::template::Template;
-use crate::asset::Asset;
+use config::Config;
+use page::Page;
+use template::Template;
+use asset::Asset;
 
 use comrak::{Arena, parse_document, format_html, Options};
 use comrak::nodes::{AstNode, NodeValue};

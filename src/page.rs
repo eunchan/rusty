@@ -10,7 +10,7 @@ use std::io::{self, BufRead, BufReader, Lines};
 use tera::Context;
 use chrono::{Local, DateTime, NaiveDate};
 
-use crate::meta::Meta;
+use meta::Meta;
 
 pub struct Page {
     pub meta: Meta,
