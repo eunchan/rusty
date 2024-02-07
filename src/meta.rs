@@ -80,7 +80,7 @@ impl Meta {
         if ! nodate {
             // TODO: Support more than %B %e, %Y
             date.push_str(" 00:00:00");
-            let parsed = dateparser::parse(&date).unwrap();
+            let parsed = dateparser::parse_with_timezone(&date, &Local).unwrap();
             self.date = Some(parsed.into());
         }
     }
