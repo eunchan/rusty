@@ -27,6 +27,20 @@ rust_test(
 )
 
 rust_library(
+    name = "build",
+    srcs = ["src/build.rs"],
+    deps = [
+        ":config",
+        ":item",
+    ],
+)
+
+rust_test(
+    name = "build_test",
+    crate = ":build",
+)
+
+rust_library(
     name = "compile",
     srcs = ["src/compile.rs"],
     deps = [
@@ -54,6 +68,16 @@ rust_library(
     proc_macro_deps = [
         "@crates//:serde_derive",
     ],
+)
+
+rust_library(
+    name = "item",
+    srcs = ["src/item.rs"],
+    deps = [
+        ":page",
+        ":asset",
+        "@crates//:walkdir",
+    ]
 )
 
 rust_library(

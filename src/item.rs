@@ -3,8 +3,8 @@
 
 use walkdir::WalkDir;
 
-use crate::page::Page;
-use crate::asset::Asset;
+use page::Page;
+use asset::Asset;
 
 // scan directory and store into a data structure (or cache?)
 // pub fn scan_assets() -> <Vec<Page>, Vec<Asset>>

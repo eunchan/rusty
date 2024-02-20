@@ -1,8 +1,8 @@
 // Build the site
 #[warn(unused_imports)]
 
-use crate::config::Config;
-use crate::item::scan_items;
+use config::Config;
+use item::scan_items;
 
 #[allow(unused)] // for cfg
 pub fn build(cfg: &Config, draft: bool) {
@@ -15,5 +15,16 @@ pub fn build(cfg: &Config, draft: bool) {
     }
     for a in &assets {
         println!("{a}");
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn scan_imgs() {
+        let (_, assets) = scan_items(String::from("tests"));
+        assert_eq!(assets.len(), 0);
     }
 }
