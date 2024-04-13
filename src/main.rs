@@ -3,14 +3,6 @@ use clap::{Parser, Subcommand};
 use std::path::{Path, PathBuf};
 
 // rusty Main function
-mod asset;
-mod build;
-mod config;
-mod item;
-mod meta;
-mod page;
-mod compile;
-mod template;
 
 use config::Config;
 use template::Template;

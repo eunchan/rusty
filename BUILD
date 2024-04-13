@@ -31,7 +31,9 @@ rust_library(
     srcs = ["src/build.rs"],
     deps = [
         ":config",
+        ":compile",
         ":item",
+        ":transform",
     ],
 )
 
@@ -48,6 +50,7 @@ rust_library(
         ":config",
         ":page",
         ":template",
+        ":transform",
         "@crates//:comrak",
     ]
 )
@@ -130,4 +133,31 @@ rust_test(
     name = "template_test",
     crate = ":template",
     data = ["//:test_data"],
+)
+
+rust_library(
+    name = "transform",
+    srcs = ["src/transform.rs"],
+    deps = [],
+)
+
+rust_test(
+    name = "transform_test",
+    crate = ":transform",
+)
+
+rust_binary(
+    name = "rusty",
+    srcs = ["src/main.rs"],
+    deps = [
+        ":asset",
+        ":build",
+        ":config",
+        ":compile",
+        ":item",
+        ":meta",
+        ":page",
+        ":template",
+        "@crates//:clap",
+    ],
 )
